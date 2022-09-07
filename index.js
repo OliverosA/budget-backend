@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const oracle = require('./src/utils/db');
 const { server } = require('./src/config/config');
 
 const requestHandler = (req, res) => {
@@ -9,6 +10,12 @@ const requestHandler = (req, res) => {
 //middelware
 app.use(requestHandler);
 
-app.listen(server.port, () => {
-  console.log(`Server running on port: ${server.port}`);
-});
+oracle
+  .start()
+  .then(() => {
+    console.log('Oracle Database Connected!!!');
+    app.listen(server.port, () => {
+      console.log(`Server running on port: ${server.port}`);
+    });
+  })
+  .catch((error) => console.log(error));

@@ -24,7 +24,7 @@ module.exports.close = async () => {
 module.exports.pool = async (statement, binds = [], opts = {}) => {
   let conn;
   let result = [];
-  opts.outFormar = oracledb.OUT_FORMAT_OBJECT;
+  opts.outFormat = oracledb.OUT_FORMAT_OBJECT;
 
   try {
     conn = await oracledb.getConnection();

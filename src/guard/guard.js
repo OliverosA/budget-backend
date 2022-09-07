@@ -1,3 +1,5 @@
+const Guard = require('../models/guard');
+
 module.exports = async (req, res, next) => {
   let isValidUser = true;
 

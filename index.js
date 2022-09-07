@@ -4,13 +4,15 @@ const oracle = require('./src/utils/db');
 const { server } = require('./src/config/config');
 const guard = require('./src/guard/guard');
 
+const personRoutes = require('./src/routes/person');
 const invalidRoutes = require('./src/routes/404');
 const categoryRoutes = require('./src/routes/category');
 
 //middelware
 app.use(express.json());
-app.use(guard);
 
+app.use(personRoutes);
+app.use(guard);
 // Handler: categories
 app.use(categoryRoutes);
 //Handler: 404

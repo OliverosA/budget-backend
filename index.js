@@ -2,13 +2,19 @@ const express = require('express');
 const app = express();
 const oracle = require('./src/utils/db');
 const { server } = require('./src/config/config');
+const guard = require('./src/guard/guard');
 
-const requestHandler = (req, res) => {
-  console.log('Request!!');
-};
+const invalidRoutes = require('./src/routes/404');
+const categoryRoutes = require('./src/routes/category');
 
 //middelware
-app.use(requestHandler);
+app.use(express.json());
+app.use(guard);
+
+// Handler: categories
+app.use(categoryRoutes);
+//Handler: 404
+app.use(invalidRoutes);
 
 oracle
   .start()

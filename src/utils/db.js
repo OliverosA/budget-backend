@@ -1,14 +1,5 @@
 const oracledb = require('oracledb');
 const { oracle } = require('../config/config');
-const path = require('path');
-
-// path to client
-const oracleClient = path.join(
-  'C:',
-  'oracle_19c',
-  'WINDOWS.X64_193000_db_home',
-  'bin'
-);
 
 // init database
 module.exports.start = async () => {
@@ -20,7 +11,7 @@ module.exports.close = async () => {
   await oracledb.getPool().close(0);
 };
 
-//query handler
+// query handler
 module.exports.pool = async (statement, binds = [], opts = {}) => {
   let conn;
   let result = [];

@@ -2,21 +2,19 @@ const express = require('express');
 const app = express();
 const oracle = require('./src/utils/db');
 const { server } = require('./src/config/config');
-const guard = require('./src/guard/guard');
+const cors = require('cors');
 
-const personRoutes = require('./src/routes/person');
-const invalidRoutes = require('./src/routes/404');
-const categoryRoutes = require('./src/routes/category');
+const routes_person = require('./src/routes/person');
+const routes_category = require('./src/routes/category');
+const routes_invalid = require('./src/routes/404');
 
 //middelware
+app.use(cors({ origin: true }));
 app.use(express.json());
 
-app.use(personRoutes);
-app.use(guard);
-// Handler: categories
-app.use(categoryRoutes);
-//Handler: 404
-app.use(invalidRoutes);
+app.use(routes_person);
+app.use(routes_category);
+app.use(routes_invalid);
 
 oracle
   .start()

@@ -1,5 +1,4 @@
 const dotenv = require('dotenv');
-const { poolMax } = require('oracledb');
 dotenv.config();
 
 module.exports = {

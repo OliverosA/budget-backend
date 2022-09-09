@@ -9,7 +9,11 @@ module.exports.create = ({ person, name, description }) => {
 
 module.exports.fetchAll = ({ person }) => {
   const bindings = { person };
-  const SQL_SELECT_CATEGORIES = `SELECT CATEGORY, NAME, DESCRIPTION, TO_CHAR(ADD_DATE, 'YYYY-MM-DD') AS ADD_DATE
+  const SQL_SELECT_CATEGORIES = `SELECT 
+                                CATEGORY AS "category", 
+                                NAME AS "name", 
+                                DESCRIPTION AS "description", 
+                                TO_CHAR(ADD_DATE, 'YYYY-MM-DD') AS "add_date"
                                 FROM CATEGORY
                                 WHERE PERSON = :person`;
   return pool(SQL_SELECT_CATEGORIES, bindings);
@@ -17,7 +21,11 @@ module.exports.fetchAll = ({ person }) => {
 
 module.exports.findById = ({ person, category }) => {
   const bindings = { person, category };
-  const SQL_SELECT_CATEGORY = `SELECT CATEGORY, NAME, DESCRIPTION, TO_CHAR(ADD_DATE, 'YYYY-MM-DD') AS ADD_DATE
+  const SQL_SELECT_CATEGORY = `SELECT 
+                                CATEGORY AS "category", 
+                                NAME AS "name", 
+                                DESCRIPTION AS "description", 
+                                TO_CHAR(ADD_DATE, 'YYYY-MM-DD') AS "add_date"
                                 FROM CATEGORY
                                 WHERE PERSON = :person
                                 AND CATEGORY = :category`;

@@ -3,24 +3,19 @@ const { auth } = require('../config/config');
 const jwt = require('jsonwebtoken');
 
 module.exports = async (req, res, next) => {
-  //let isValidUser = true;
-  const authorizationHeader = req.get('Authorization');
+  const header_authorization = req.get('Authorization');
 
-  if (authorizationHeader) {
-    const token = authorizationHeader.split(' ')[1];
+  if (header_authorization) {
+    const token = header_authorization.split(' ')[1];
     try {
       const decoded_token = jwt.verify(token, auth.token);
       if (decoded_token) {
-        const args = { person: decoded_token['PERSON'] };
+        const args = { person: decoded_token.person };
         const {
-          rows: [PERSON],
+          rows: [person],
         } = await Guard.person(args);
-        if (PERSON) {
-          req.person = {
-            person: PERSON['PERSON'],
-            username: PERSON['USERNAME'],
-            email: PERSON['EMAIL'],
-          };
+        if (person) {
+          req.person = { ...person };
           return next();
         }
       }

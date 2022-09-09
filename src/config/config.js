@@ -14,4 +14,7 @@ module.exports = {
     poolMax: 10,
     poolIncrement: 0,
   },
+  auth: {
+    token: process.env.AUTH_TOKEN,
+  },
 };

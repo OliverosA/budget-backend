@@ -1,4 +1,4 @@
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 dotenv.config();
 
 module.exports = {
@@ -15,5 +15,8 @@ module.exports = {
   },
   auth: {
     token: process.env.AUTH_TOKEN,
+  },
+  api: {
+    url: process.env.API_URL,
   },
 };

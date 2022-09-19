@@ -1,4 +1,4 @@
-const { pool } = require('../utils/db');
+const { pool } = require("../utils/db");
 
 module.exports.create = ({ person, name, description }) => {
   const bindings = { person, name, description };

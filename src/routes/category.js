@@ -1,15 +1,15 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const guard = require('./src/guard/guard');
+const guard = require("../guard/guard");
 
 const {
   createCategory,
   getCategories,
   getCategory,
-} = require('../controllers/category');
+} = require("../controllers/category");
 
-router.post('/category', guard, createCategory);
-router.get('/category', guard, getCategories);
-router.get('/category/:id', guard, getCategory);
+router.post("/category", guard, createCategory);
+router.get("/category", guard, getCategories);
+router.get("/category/:id", guard, getCategory);
 
 module.exports = router;

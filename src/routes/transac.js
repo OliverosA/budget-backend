@@ -8,8 +8,8 @@ const {
   getAccountTransactions,
 } = require("../controllers/transac");
 
-router.post("/transac", guard, createTransac);
-router.get("/transac", guard, getTransactions);
-router.get("/transac/:id", guard, getAccountTransactions);
+router.post("/transaction", guard, createTransac);
+router.get("/transaction", guard, getTransactions);
+router.get("/transaction/:id", guard, getAccountTransactions);
 
 module.exports = router;

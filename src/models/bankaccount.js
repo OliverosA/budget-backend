@@ -33,3 +33,10 @@ module.exports.fetchById = ({ person, bankaccount }) => {
                                 AND BANKACCOUNT = :bankaccount`;
   return pool(SQL_SELECT_BANKACCOUNT, bindings);
 };
+
+module.exports.getCurrentSequence = () => {
+  const SQ_GET_SEQUENCE = `SELECT LAST_NUMBER as "last_number"
+                          FROM USER_SEQUENCES
+                          WHERE sequence_name = 'SQ_BANKACCOUNT'`;
+  return pool(SQ_GET_SEQUENCE);
+};

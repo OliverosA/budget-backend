@@ -1,7 +1,7 @@
-const Person = require('../models/person');
-const { auth } = require('../config/config');
-const bcryptjs = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const Person = require("../models/person");
+const { auth } = require("../config/config");
+const bcryptjs = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 module.exports.registerPerson = async (req, res, next) => {
   const { username, email, password } = req.body;
@@ -10,18 +10,17 @@ module.exports.registerPerson = async (req, res, next) => {
     const password_hash = await bcryptjs.hash(password, 12);
     const args = { username, email, password: password_hash };
     await Person.register(args);
-    res.status(200).json({ message: 'Person Created!' });
+    res.status(200).json({ message: "Person Created!" });
   } catch (error) {
     res.status(400).json({ message: error });
   }
 };
 
-module.exports.loginPerson = async (req, res, net) => {
+module.exports.loginPerson = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const args = { email };
     const { rows } = await Person.login(args);
-
     if (rows.length) {
       const { person, username, password: password_hash, email } = rows[0];
       const password_is_valid = await bcryptjs.compare(password, password_hash);
@@ -32,7 +31,7 @@ module.exports.loginPerson = async (req, res, net) => {
         return res.status(200).json({ token, data });
       }
     }
-    res.status(400).json({ message: 'Error: email or password not valid' });
+    res.status(400).json({ message: "Error: email or password not valid" });
   } catch (error) {
     res.status(400).json({ message: error });
   }

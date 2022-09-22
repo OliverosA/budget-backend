@@ -3,12 +3,11 @@ const Transac = require("../models/transac");
 module.exports.createTransac = async (req, res, next) => {
   const args = {
     person: req.person.person,
-    transac: req.body.transac,
     amount: req.body.amount,
     description: req.body.description,
     bankaccount: req.body.bankaccount,
     category: req.body.category,
-    currency: req.body.category,
+    currency: req.body.currency,
     trtype: req.body.trtype,
   };
   try {
@@ -24,7 +23,7 @@ module.exports.getTransactions = async (req, res, next) => {
     person: req.person.person,
   };
   try {
-    const { rows } = await Transac.fetchById(args);
+    const { rows } = await Transac.fetchAll(args);
     res.status(200).json({ data: rows });
   } catch (error) {
     res.status(400).json({ message: error });

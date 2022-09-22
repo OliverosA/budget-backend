@@ -1,8 +1,6 @@
 const { pool } = require("../utils/db");
 
 module.exports.create = ({
-  person,
-  transac,
   amount,
   description,
   bankaccount,
@@ -11,8 +9,6 @@ module.exports.create = ({
   trtype,
 }) => {
   const bindings = {
-    person,
-    transac,
     amount,
     description,
     bankaccount,
@@ -35,7 +31,7 @@ module.exports.create = ({
                                     SQ_TRANSAC.NEXTVAL,
                                     :amount, 
                                     :description, 
-                                    :bankaccount, 
+                                    :bankaccount,
                                     :category,
                                     :currency,
                                     :trtype
@@ -52,7 +48,7 @@ module.exports.fetchAll = ({ person }) => {
                                 BANKACCOUNT AS "bankaccount",
                                 CATEGORY AS "category",
                                 CURRENCY AS "currency",
-                                TRTYPE AS "trtype" 
+                                TRTYPE AS "trtype", 
                                 TO_CHAR(ADD_DATE, 'YYYY-MM-DD') AS "add_date"
                                 FROM TRANSAC
                                 WHERE PERSON = :person`;
@@ -62,16 +58,16 @@ module.exports.fetchAll = ({ person }) => {
 module.exports.fetchById = ({ person, bankaccount }) => {
   const bindings = { person, bankaccount };
   const SQL_SELECT_ACCOUNTTRANSCTIONS = `SELECT 
-                                TRANSAC AS "transac", 
-                                AMOUNT AS "amount",
-                                DESCRIPTION AS "description",
-                                BANKACCOUNT AS "bankaccount",
-                                CATEGORY AS "category",
-                                CURRENCY AS "currency",
-                                TRTYPE AS "trtype" 
-                                TO_CHAR(ADD_DATE, 'YYYY-MM-DD') AS "add_date"
-                                FROM TRANSAC
-                                WHERE PERSON = :person
-                                AND BANKACCOUNT = :bankaccount`;
+                                        tr.TRANSAC AS "transac",
+                                        tr.AMOUNT AS "amount",
+                                        tr.DESCRIPTION AS "description",
+                                        tr.BANKACCOUNT AS "bankaccount",
+                                        tr.CATEGORY AS "category",
+                                        tr.CURRENCY AS "currency",
+                                        tr.TRTYPE AS "trtype",
+                                        TO_CHAR(tr.ADD_DATE , 'YYYY-MM-DD') AS "add_date",
+                                        pe.PERSON AS "person"
+                                        FROM TRANSAC tr, PERSON pe
+                                        WHERE pe.PERSON = :person;`;
   return pool(SQL_SELECT_ACCOUNTTRANSCTIONS, bindings);
 };

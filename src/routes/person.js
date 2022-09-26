@@ -10,6 +10,6 @@ const {
 
 router.post("/register", registerPerson);
 router.post("/login", loginPerson);
-router.post("/person", guard, infoPerson);
+router.get("/person", guard, infoPerson);
 
 module.exports = router;

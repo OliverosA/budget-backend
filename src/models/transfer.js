@@ -5,16 +5,12 @@ module.exports.create = ({
   description,
   orig_account,
   dest_account,
-  orig_currency,
-  dest_currency,
 }) => {
   const bindings = {
     amount,
     description,
     orig_account,
     dest_account,
-    orig_currency,
-    dest_currency,
   };
 
   const SQL_INSERT_TRANSFER = `BEGIN
@@ -23,9 +19,7 @@ module.exports.create = ({
                                         :amount,
                                         :description,
                                         :orig_account,
-                                        :dest_account,
-                                        :orig_currency,
-                                        :dest_currency
+                                        :dest_account
                                     );
                                 END;`;
   return pool(SQL_INSERT_TRANSFER, bindings, { autoCommit: true });

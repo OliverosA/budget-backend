@@ -7,8 +7,6 @@ module.exports.createTransfer = async (req, res, next) => {
     description: req.body.description,
     orig_account: req.body.orig_account,
     dest_account: req.body.dest_account,
-    orig_currency: req.body.orig_currency,
-    dest_currency: req.body.dest_currency,
   };
   try {
     await Transfer.create(args);

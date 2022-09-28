@@ -71,3 +71,19 @@ module.exports.fetchById = ({ person, bankaccount }) => {
                                         WHERE pe.PERSON = :person;`;
   return pool(SQL_SELECT_ACCOUNTTRANSCTIONS, bindings);
 };
+
+module.exports.getIncomeSum = ({ person, bankaccount }) => {
+  const bindings = { person, bankaccount };
+  const SQL_SELECT_INCOMESUM = `SELECT DISTINCT 
+                                NVL(incomes_summary(:bankaccount, :person), 0) AS "incomes_summary"
+                                FROM TRANSAC`;
+  return pool(SQL_SELECT_INCOMESUM, bindings);
+};
+
+module.exports.getExpenseSum = ({ person, bankaccount }) => {
+  const bindings = { person, bankaccount };
+  const SQL_SELECT_EXPENSESUM = `SELECT DISTINCT 
+                                NVL(expenses_summary(:bankaccount, :person), 0) AS "expenses_summary"
+                                FROM TRANSAC`;
+  return pool(SQL_SELECT_EXPENSESUM, bindings);
+};

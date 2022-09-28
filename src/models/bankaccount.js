@@ -10,13 +10,14 @@ module.exports.create = ({ person, account_number, balance, currency }) => {
 module.exports.fetchAll = ({ person }) => {
   const bindings = { person };
   const SQL_SELECT_BANKACCOUNTS = `SELECT 
-                                BANKACCOUNT AS "bankaccount", 
-                                ACCOUNT_NUMBER AS "account_number", 
-                                BALANCE AS "balance",
-                                CURRENCY as "currency", 
-                                TO_CHAR(ADD_DATE, 'YYYY-MM-DD') AS "add_date"
-                                FROM BANKACCOUNT
-                                WHERE PERSON = :person`;
+                                    BANKACCOUNT AS "bankaccount", 
+                                    ACCOUNT_NUMBER AS "account_number", 
+                                    BALANCE AS "balance",
+                                    CURRENCY AS "currency", 
+                                    TO_CHAR(ADD_DATE, 'YYYY-MM-DD') AS "add_date"
+                                    FROM BANKACCOUNT
+                                    WHERE PERSON = :person
+                                    ORDER BY BANKACCOUNT`;
   return pool(SQL_SELECT_BANKACCOUNTS, bindings);
 };
 

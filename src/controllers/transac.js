@@ -44,32 +44,41 @@ module.exports.getAccountTransactions = async (req, res, next) => {
 };
 
 module.exports.getIncomeSummary = async (req, res, next) => {
-  const args = {
-    person: req.person.person,
-    bankaccount: Number(req.params.id),
-  };
-
   try {
-    const { rows } = await Transac.getIncomeSum(args);
-    const { incomes_summary } = rows[0];
-    res.status(200).json({ data: incomes_summary.toFixed(2) });
+    let args = {};
+    const idList = req.body.accounts;
+    const result = await Promise.all(
+      idList.map(async (id) => {
+        args = { person: req.person.person, bankaccount: id };
+        const { rows } = await Transac.getIncomeSum(args);
+        const { incomes_summary } = await rows[0];
+        return Number(incomes_summary.toFixed(2));
+      })
+    );
+    res.status(200).json({ data: result });
   } catch (error) {
     res.status(400).json({
-      message: error,
+      message: error.message,
     });
   }
 };
 
 module.exports.getExpenseSummary = async (req, res, next) => {
-  const args = {
-    person: req.person.person,
-    bankaccount: Number(req.params.id),
-  };
   try {
-    const { rows } = await Transac.getExpenseSum(args);
-    const { expenses_summary } = rows[0];
-    res.status(200).json({ data: expenses_summary.toFixed(2) });
+    let args = {};
+    const idList = req.body.accounts;
+    const result = await Promise.all(
+      idList.map(async (id) => {
+        args = { person: req.person.person, bankaccount: id };
+        const { rows } = await Transac.getExpenseSum(args);
+        const { expenses_summary } = await rows[0];
+        return Number(expenses_summary.toFixed(2));
+      })
+    );
+    res.status(200).json({ data: result });
   } catch (error) {
-    res.status(400).json({ message: error });
+    res.status(400).json({
+      message: error.message,
+    });
   }
 };

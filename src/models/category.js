@@ -15,7 +15,9 @@ module.exports.fetchAll = ({ person }) => {
                                 DESCRIPTION AS "description", 
                                 TO_CHAR(ADD_DATE, 'YYYY-MM-DD') AS "add_date"
                                 FROM CATEGORY
-                                WHERE PERSON = :person`;
+                                WHERE PERSON = :person
+                                OR PERSON IS NULL
+                                ORDER BY CATEGORY`;
   return pool(SQL_SELECT_CATEGORIES, bindings);
 };
 

@@ -14,6 +14,6 @@ router.post("/transaction", guard, createTransac);
 router.get("/transaction", guard, getTransactions);
 router.get("/transaction/:id", guard, getAccountTransactions);
 router.post("/trasaction/incomeSummary", guard, getIncomeSummary);
-router.get("/trasaction/expenseSummary/:id", guard, getExpenseSummary);
+router.post("/trasaction/expenseSummary", guard, getExpenseSummary);
 
 module.exports = router;

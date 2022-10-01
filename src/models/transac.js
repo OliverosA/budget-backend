@@ -51,7 +51,7 @@ module.exports.fetchAll = ({ person }) => {
                                     t.TRTYPE AS "trtype", 
                                     TO_CHAR(t.ADD_DATE, 'YYYY-MM-DD') AS "add_date"
                                     FROM TRANSAC t, BANKACCOUNT b
-                                    WHERE b.PERSON = 1
+                                    WHERE b.PERSON = :person
                                     AND t.BANKACCOUNT = b.BANKACCOUNT 
                                     ORDER BY b.BANKACCOUNT`;
   return pool(SQL_SELECT_TRANSACTIONS, bindings);

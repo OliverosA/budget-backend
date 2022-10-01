@@ -70,7 +70,7 @@ module.exports.fetchById = ({ person, bankaccount }) => {
                                         TO_CHAR(tr.ADD_DATE , 'YYYY-MM-DD') AS "add_date",
                                         pe.PERSON AS "person"
                                         FROM TRANSAC tr, PERSON pe
-                                        WHERE pe.PERSON = :person;`;
+                                        WHERE pe.PERSON = :person`;
   return pool(SQL_SELECT_ACCOUNTTRANSCTIONS, bindings);
 };
 

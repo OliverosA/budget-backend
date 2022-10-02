@@ -1,18 +1,18 @@
 const { pool } = require("../utils/db");
 
 module.exports.createIncomeTransaction = ({
+  person,
   amount,
   description,
   bankaccount,
   category,
-  currency,
 }) => {
   const bindings = {
+    person,
     amount,
     description,
     bankaccount,
     category,
-    currency,
   };
 
   const SQL_INSERT_INCOMETRANSAC = `BEGIN
@@ -22,25 +22,25 @@ module.exports.createIncomeTransaction = ({
                                       :amount,
                                       :description,
                                       :bankaccount,
-                                      :category,
+                                      :category
                                       );
                                     END;`;
   return pool(SQL_INSERT_INCOMETRANSAC, bindings, { autoCommit: true });
 };
 
 module.exports.createExpenseTransaction = ({
+  person,
   amount,
   description,
   bankaccount,
   category,
-  currency,
 }) => {
   const bindings = {
+    person,
     amount,
     description,
     bankaccount,
     category,
-    currency,
   };
 
   const SQL_INSERT_EXPENSETRANSAC = `BEGIN
@@ -50,7 +50,7 @@ module.exports.createExpenseTransaction = ({
                                       :amount,
                                       :description,
                                       :bankaccount,
-                                      :category,
+                                      :category
                                       );
                                     END;`;
   return pool(SQL_INSERT_EXPENSETRANSAC, bindings, { autoCommit: true });

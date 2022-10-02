@@ -4,6 +4,6 @@ const guard = require("../guard/guard");
 
 const { getTransactionTypes } = require("../controllers/trtype");
 
-router.post("/transactiontypes", guard, getTransactionTypes);
+router.get("/transactiontypes", guard, getTransactionTypes);
 
 module.exports = router;

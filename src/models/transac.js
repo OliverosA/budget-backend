@@ -60,17 +60,18 @@ module.exports.fetchAll = ({ person }) => {
 module.exports.fetchById = ({ person, bankaccount }) => {
   const bindings = { person, bankaccount };
   const SQL_SELECT_ACCOUNTTRANSCTIONS = `SELECT 
-                                        tr.TRANSAC AS "transac",
-                                        tr.AMOUNT AS "amount",
-                                        tr.DESCRIPTION AS "description",
-                                        tr.BANKACCOUNT AS "bankaccount",
-                                        tr.CATEGORY AS "category",
-                                        tr.CURRENCY AS "currency",
-                                        tr.TRTYPE AS "trtype",
-                                        TO_CHAR(tr.ADD_DATE , 'YYYY-MM-DD') AS "add_date",
-                                        pe.PERSON AS "person"
-                                        FROM TRANSAC tr, PERSON pe
-                                        WHERE pe.PERSON = :person`;
+                                          t.TRANSAC AS "transac", 
+                                          t.AMOUNT AS "amount",
+                                          t.DESCRIPTION AS "description",
+                                          t.BANKACCOUNT AS "bankaccount",
+                                          t.CATEGORY AS "category",
+                                          t.CURRENCY AS "currency",
+                                          t.TRTYPE AS "trtype", 
+                                          TO_CHAR(t.ADD_DATE, 'YYYY-MM-DD') AS "add_date"
+                                          FROM TRANSAC t, BANKACCOUNT b
+                                          WHERE b.PERSON = :person
+                                          AND b.BANKACCOUNT = :bankaccount
+                                          AND t.BANKACCOUNT = :bankaccount`;
   return pool(SQL_SELECT_ACCOUNTTRANSCTIONS, bindings);
 };
 

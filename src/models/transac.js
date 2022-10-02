@@ -1,12 +1,11 @@
 const { pool } = require("../utils/db");
 
-module.exports.create = ({
+module.exports.createIncomeTransaction = ({
   amount,
   description,
   bankaccount,
   category,
   currency,
-  trtype,
 }) => {
   const bindings = {
     amount,
@@ -14,29 +13,47 @@ module.exports.create = ({
     bankaccount,
     category,
     currency,
-    trtype,
   };
 
-  const SQL_INSERT_TRANSAC = `INSERT INTO 
-                                TRANSAC (
-                                    TRANSAC, 
-                                    AMOUNT,
-                                    DESCRIPTION,
-                                    BANKACCOUNT,
-                                    CATEGORY,
-                                    CURRENCY,
-                                    TRTYPE
-                                )
-                                VALUES (
-                                    SQ_TRANSAC.NEXTVAL,
-                                    :amount, 
-                                    :description, 
-                                    :bankaccount,
-                                    :category,
-                                    :currency,
-                                    :trtype
-                                )`;
-  return pool(SQL_INSERT_TRANSAC, bindings, { autoCommit: true });
+  const SQL_INSERT_INCOMETRANSAC = `BEGIN
+                                    EXECUTE_INCOME (
+                                      :person,
+                                      SQ_TRANSAC.NEXTVAL,
+                                      :amount,
+                                      :description,
+                                      :bankaccount,
+                                      :category,
+                                      );
+                                    END;`;
+  return pool(SQL_INSERT_INCOMETRANSAC, bindings, { autoCommit: true });
+};
+
+module.exports.createExpenseTransaction = ({
+  amount,
+  description,
+  bankaccount,
+  category,
+  currency,
+}) => {
+  const bindings = {
+    amount,
+    description,
+    bankaccount,
+    category,
+    currency,
+  };
+
+  const SQL_INSERT_EXPENSETRANSAC = `BEGIN
+                                    EXECUTE_EXPENSE (
+                                      :person,
+                                      SQ_TRANSAC.NEXTVAL,
+                                      :amount,
+                                      :description,
+                                      :bankaccount,
+                                      :category,
+                                      );
+                                    END;`;
+  return pool(SQL_INSERT_EXPENSETRANSAC, bindings, { autoCommit: true });
 };
 
 module.exports.fetchAll = ({ person }) => {

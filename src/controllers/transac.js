@@ -1,17 +1,31 @@
 const Transac = require("../models/transac");
 
-module.exports.createTransac = async (req, res, next) => {
+module.exports.createIncomeTransac = async (req, res, next) => {
   const args = {
     person: req.person.person,
     amount: req.body.amount,
     description: req.body.description,
     bankaccount: req.body.bankaccount,
     category: req.body.category,
-    currency: req.body.currency,
-    trtype: req.body.trtype,
   };
   try {
-    await Transac.create(args);
+    await Transac.createIncomeTransaction(args);
+    res.status(200).json({ message: "Transaction created!" });
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+};
+
+module.exports.createExpenseTransac = async (req, res, next) => {
+  const args = {
+    person: req.person.person,
+    amount: req.body.amount,
+    description: req.body.description,
+    bankaccount: req.body.bankaccount,
+    category: req.body.category,
+  };
+  try {
+    await Transac.createExpenseTransaction(args);
     res.status(200).json({ message: "Transaction created!" });
   } catch (error) {
     res.status(400).json({ message: error });

@@ -9,6 +9,7 @@ const routes_category = require("./src/routes/category");
 const routes_bankaccount = require("./src/routes/bankaccount");
 const routes_transfer = require("./src/routes/transfer");
 const routes_transactions = require("./src/routes/transac");
+const routes_trtypes = require("./src/routes/trtype");
 const routes_currencies = require("./src/routes/currency");
 const routes_invalid = require("./src/routes/404");
 
@@ -22,6 +23,7 @@ app.use(api.url, routes_bankaccount);
 app.use(api.url, routes_transactions);
 app.use(api.url, routes_transfer);
 app.use(api.url, routes_currencies);
+app.use(api.url, routes_trtypes);
 app.use(api.url, routes_invalid);
 app.use(routes_invalid);
 

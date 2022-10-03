@@ -33,7 +33,6 @@ module.exports.getCategory = async (req, res, next) => {
   };
   try {
     const { rows } = await Category.findById(args);
-    // console.log(rows[0].category); get the ID from category
     res.status(200).json({ data: rows });
   } catch (error) {
     res.status(400).json({ message: error });

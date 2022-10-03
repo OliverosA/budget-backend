@@ -34,10 +34,19 @@ module.exports.getBankAccount = async (req, res, next) => {
   };
   try {
     const { rows } = await BankAccount.fetchById(args);
-    //const { rows: sequence } = await BankAccount.getCurrentSequence();
-    //console.log(sequence[0].last_number);
-    //const { last_number } = sequence[0];
-    //console.log(last_number);
+    res.status(200).json({ data: rows });
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+};
+
+module.exports.validateBankAccount = async (req, res, next) => {
+  const args = {
+    person: req.person.person,
+    account_number: req.body.account_number,
+  };
+  try {
+    const { rows } = await BankAccount.fetchByAccountNumber(args);
     res.status(200).json({ data: rows });
   } catch (error) {
     res.status(400).json({ message: error });

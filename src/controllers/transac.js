@@ -8,7 +8,6 @@ module.exports.createIncomeTransac = async (req, res, next) => {
     bankaccount: req.body.bankaccount,
     category: req.body.category,
   };
-  console.log(args);
   try {
     await Transac.createIncomeTransaction(args);
     res.status(200).json({ message: "Transaction created!" });

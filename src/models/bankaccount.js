@@ -35,9 +35,16 @@ module.exports.fetchById = ({ person, bankaccount }) => {
   return pool(SQL_SELECT_BANKACCOUNT, bindings);
 };
 
-module.exports.getCurrentSequence = () => {
-  const SQ_GET_SEQUENCE = `SELECT LAST_NUMBER as "last_number"
-                          FROM USER_SEQUENCES
-                          WHERE sequence_name = 'SQ_BANKACCOUNT'`;
-  return pool(SQ_GET_SEQUENCE);
+module.exports.fetchByAccountNumber = ({ person, account_number }) => {
+  const bindings = { person, account_number };
+  const SQL_GET_BANKACCOUNT = `SELECT 
+                              BANKACCOUNT AS "bankaccount", 
+                              ACCOUNT_NUMBER AS "account_number", 
+                              BALANCE AS "balance",
+                              CURRENCY as "currency", 
+                              TO_CHAR(ADD_DATE, 'YYYY-MM-DD') AS "add_date"
+                              FROM BANKACCOUNT
+                              WHERE ACCOUNT_NUMBER = :account_number
+                              AND PERSON  = :person`;
+  return pool(SQL_GET_BANKACCOUNT, bindings);
 };

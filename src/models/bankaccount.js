@@ -38,13 +38,13 @@ module.exports.fetchById = ({ person, bankaccount }) => {
 module.exports.fetchByAccountNumber = ({ person, account_number }) => {
   const bindings = { person, account_number };
   const SQL_GET_BANKACCOUNT = `SELECT 
-                              BANKACCOUNT AS "bankaccount", 
-                              ACCOUNT_NUMBER AS "account_number", 
-                              BALANCE AS "balance",
-                              CURRENCY as "currency", 
-                              TO_CHAR(ADD_DATE, 'YYYY-MM-DD') AS "add_date"
-                              FROM BANKACCOUNT, PERSON
-                              WHERE ACCOUNT_NUMBER = :account_number
-                              AND PERSON.PERSON  = :person`;
+                              b.BANKACCOUNT AS "bankaccount", 
+                              b.ACCOUNT_NUMBER AS "account_number", 
+                              b.BALANCE AS "balance",
+                              b.CURRENCY as "currency", 
+                              TO_CHAR(b.ADD_DATE, 'YYYY-MM-DD') AS "add_date"
+                              FROM BANKACCOUNT b, PERSON p
+                              WHERE b.ACCOUNT_NUMBER = :account_number
+                              AND p.PERSON  = :person`;
   return pool(SQL_GET_BANKACCOUNT, bindings);
 };

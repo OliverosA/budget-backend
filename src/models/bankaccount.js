@@ -43,8 +43,8 @@ module.exports.fetchByAccountNumber = ({ person, account_number }) => {
                               BALANCE AS "balance",
                               CURRENCY as "currency", 
                               TO_CHAR(ADD_DATE, 'YYYY-MM-DD') AS "add_date"
-                              FROM BANKACCOUNT
+                              FROM BANKACCOUNT, PERSON
                               WHERE ACCOUNT_NUMBER = :account_number
-                              AND PERSON  = :person`;
+                              AND PERSON.PERSON  = :person`;
   return pool(SQL_GET_BANKACCOUNT, bindings);
 };

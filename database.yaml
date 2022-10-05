@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-oracle
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-oracle
+  template:
+    metadata:
+      labels:
+        app: db-oracle
+    spec:
+      volumes:
+        - name: db-init-volume
+          configMap:
+            name: db-init-cm
+      containers:
+        - name: db-oracle
+          image: gvenzl/oracle-xe
+          env:
+            - name: ORACLE_PASSWORD
+              value: "mipassword"
+            - name: APP_USER
+              value: "appuser"
+            - name: APP_USER_PASSWORD
+              value: "budgetoliverosapp"
+          resources:
+            limits:
+              memory: "3000Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 1521
+          volumeMounts:
+            - name: db-init-volume
+              mountPath: /container-entrypoint-initdb.d
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-oracle
+spec:
+  type: ClusterIP
+  selector:
+    app: db-oracle
+  ports:
+    - port: 1521
+      targetPort: 1521
